@@ -1,62 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const CybersecurityDashboard = () => {
-  const [systemStatus, setSystemStatus] = useState({
+  const [systemStatus] = useState({
     networkMonitoring: 'Active',
     mlDetection: 'Operational',
     firebaseConnection: 'Degraded'
   });
-  const [recentAlerts, setRecentAlerts] = useState([]);
-  const [keyMetrics, setKeyMetrics] = useState({
-    totalAlerts: 0,
-    criticalThreats: 0,
-    avgResponseTime: 0,
+
+  // Static recent alerts
+  const [recentAlerts] = useState([
+    { threat: 'SQL Injection', severity: 'Critical', time: '12:45 PM' },
+    { threat: 'DDoS', severity: 'Warning', time: '1:15 PM' },
+    { threat: 'XSS', severity: 'Warning', time: '2:00 PM' }
+  ]);
+
+  // Static key metrics
+  const [keyMetrics] = useState({
+    totalAlerts: 15,
+    criticalThreats: 3,
+    avgResponseTime: 1.2,
     networkUptime: 99.9
   });
-
-  const generateMockLogs = () => {
-    const threats = ['Normal', 'DDoS', 'SQL Injection', 'XSS', 'Brute Force'];
-    return Array(20).fill().map(() => ({
-      timestamp: new Date().toISOString(),
-      threatType: threats[Math.floor(Math.random() * threats.length)],
-      severity: Math.random() > 0.7 ? 'Critical' : 'Warning',
-      responseTime: Math.random() * 2
-    }));
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const mockLogs = generateMockLogs();
-      analyzeLogs(mockLogs);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const analyzeLogs = (logs) => {
-    const newAlerts = logs
-      .filter(log => log.threatType !== 'Normal')
-      .slice(0, 3)
-      .map(alert => ({
-        threat: alert.threatType,
-        severity: alert.severity,
-        time: new Date().toLocaleTimeString()
-      }));
-
-    setRecentAlerts(newAlerts);
-
-    setKeyMetrics(prev => ({
-      totalAlerts: logs.filter(log => log.threatType !== 'Normal').length,
-      criticalThreats: logs.filter(log => log.severity === 'Critical').length,
-      avgResponseTime: calculateAvgResponseTime(logs),
-      networkUptime: prev.networkUptime
-    }));
-  };
-
-  const calculateAvgResponseTime = (logs) => {
-    const responseTimes = logs.map(log => log.responseTime);
-    return responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length;
-  };
 
   return (
     <div className="bg-gray-900 text-white min-h-screen flex flex-col">
