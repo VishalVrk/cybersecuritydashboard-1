@@ -16,10 +16,10 @@ const CybersecurityDashboard = () => {
 
   // Static key metrics
   const [keyMetrics] = useState({
-    totalAlerts: 15,
-    criticalThreats: 3,
-    avgResponseTime: 1.2,
-    networkUptime: 99.9
+    totalAlerts: 0,
+    criticalThreats: 0,
+    avgResponseTime: 0,
+    networkUptime: 0
   });
 
   return (
