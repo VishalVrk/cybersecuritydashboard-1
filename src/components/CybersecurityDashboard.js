@@ -21,7 +21,7 @@ const CybersecurityDashboard = () => {
     avgResponseTime: 0,
     networkUptime: 0
   });
-
+ 
   return (
     <div className="bg-gray-900 text-white min-h-screen flex flex-col">
       <header className="bg-gray-800 p-6">
